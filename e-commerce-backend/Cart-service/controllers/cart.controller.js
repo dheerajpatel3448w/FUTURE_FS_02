@@ -52,7 +52,7 @@ export const getcart = async (req,res) => {
             });
         }
               console.log(cart);
-              console.log(cart2);
+            
         return res.status(200).json({
             success: true,
             cart
