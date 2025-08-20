@@ -429,7 +429,7 @@ console.log("Selected address:", selectedAddress);
                       className="flex items-center border-b border-gray-100 pb-6 last:border-0 last:pb-0"
                     >
                       <div className="flex-shrink-0 w-20 h-20 bg-gray-200 border-2 border-dashed rounded-xl" >
-                        <img src={item.productId?.images[0]} alt=""  className='w-full h-full object-cover' />
+                        <img src={item.productId?.image} alt=""  className='w-full h-full object-cover' />
                         </div>
                       
                       <div className="ml-4 flex-1">

@@ -5,6 +5,7 @@ export const createcart = async(req,res) => {
         const userId = req.user._id;
         const {productId, quantity} = req.body;
         console.log(productId);
+        console.log(quantity);
         if( !productId || !quantity ) {
             return res.status(400).json({
                 success: false,
