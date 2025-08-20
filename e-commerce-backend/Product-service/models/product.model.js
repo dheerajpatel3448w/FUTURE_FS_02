@@ -17,6 +17,12 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+     search:[
+        {
+            type: String,
+            required: true
+        }
+     ],
     images: [
        {
          type: String,
@@ -25,8 +31,8 @@ const productSchema = new mongoose.Schema({
     ],
     availability: {
         type: String,
-        enum: ["In Stock", "Out of Stock"],
-        default: "In Stock"
+        enum: ["in-stock", "out-of-stock"],
+        default: "in-stock"
     },
     rating: {
         type: Number,

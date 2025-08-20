@@ -28,11 +28,12 @@ export const getproducts= async (req,res) => {
 export const singleproduct = async (req,res) => {
     try {
         const productId = req.params.id;
-        const product = await Product.findById(productId);
+        const product = await Product.findOne({_id:productId});
+        console.log(product);
         if (!product) {
             return res.status(404).json({ message: "Product not found" });
         }
-        const rating = await Rating.find({productId: productId});
+        const rating = await Rating.find({product: productId});
         const averageRating = rating.reduce((acc, curr) => acc + curr.rating, 0) / rating.length || 0;
         const totalReviews = rating.length;
        const product2 = await Product.findByIdAndUpdate(productId,{
@@ -155,7 +156,10 @@ export const categoryProducts = async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const skip = (page - 1) * limit;
     const category = req.query.category;
-    const products = await Product.find({ category }).skip(skip).limit(limit);
+    const products = await Product.find({
+  search: { $elemMatch: { $regex: category, $options: "i" } }
+}).skip(skip).limit(limit);
+
     console.log(products,"1");
     if(!products || products.length === 0) {
         return res.status(404).json({ message: "No products found" });
@@ -164,8 +168,12 @@ export const categoryProducts = async (req, res) => {
         message: "Products fetched successfully",
         products: products,
         currentPage: page,
-        totalProducts: await Product.countDocuments({ category }),
-        totalPages: Math.ceil(await Product.countDocuments({ category }) / limit)
+        totalProducts: await Product.countDocuments({
+  search: { $elemMatch: { $regex: category, $options: "i" } }
+}),
+        totalPages: Math.ceil(await Product.countDocuments({
+  search: { $elemMatch: { $regex: category, $options: "i" } }
+}) / limit)
     });
   } catch (error) {
     console.error("Error fetching products:", error);
@@ -178,7 +186,10 @@ export const categoryProducts2 = async (req, res) => {
 
     const category = req.query.category;
     console.log(category);
-    const products = await Product.find({ category: category }).limit(10);
+   const products = await Product.find({
+  search: { $elemMatch: { $regex: category, $options: "i" } }
+}).limit(10);
+
     console.log(products);
     if (!products || products.length === 0) {
         return res.status(404).json({ message: "No products found" });

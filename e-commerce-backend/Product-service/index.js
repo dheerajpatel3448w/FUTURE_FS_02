@@ -17,7 +17,7 @@ app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cookieParser());
 
 app.use('/', router);
-app.use('/rating', router2);
+app.use('/', router2);
 
 
 connectdb().then(() => {

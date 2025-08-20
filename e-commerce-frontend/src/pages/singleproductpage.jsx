@@ -106,13 +106,38 @@ axios.get(`${import.meta.env.VITE_API_URL_PRODUCT}/product/getproduct/${id}`,{
 .then((response) => {
   // Handle the response data
   console.log(response.data);
-  setproduct(response.data.product);
+ 
+  axios.get(`${import.meta.env.VITE_API_URL_PRODUCT}/product/rating/getrating/${response.data.product._id}`,{
+  withCredentials:true,
+  headers:{
+    Authorization:`Bearer ${JSON.parse(localStorage.getItem('token'))}`
+  }
+}).then((response)=>{
+  console.log(response.data);
+  setAllReviews(response.data.ratings.map((rating2)=>{
+    return (
+        {
+        id:rating2._id,
+        avatar: "/avatar-3.jpg",
+        user:rating2.user.name,
+        rating: rating2.rating,
+        comment: rating2.comment,
+        date:new Date().toISOString().split('T')[0]
+      }
+    )
+  }));
+}).catch((error) => {
+  console.error("Error fetching product ratings:", error);
+});
+ setproduct(response.data.product);
 
 })
 .catch((error) => {
   // Handle any errors
   console.error("Error fetching product:", error);
 });
+
+
 },[]);
   const handleQuantityChange = (value) => {
     if (quantity + value > 0 && quantity + value <= product?.stock) {
@@ -126,6 +151,7 @@ axios.get(`${import.meta.env.VITE_API_URL_PRODUCT}/product/getproduct/${id}`,{
     setTimeout(() => setIsAddedToCart(false), 3000);
 
   };
+  console.log(allReviews);
 const addcart = async(product) => {
    try {
      const response = await axios.post(`${import.meta.env.VITE_API_URL_CART}/cart/createcart`, {productId:product._id ,quantity:quantity},{
@@ -141,8 +167,8 @@ const addcart = async(product) => {
  }
   const handleReviewSubmit = async(e) => {
     e.preventDefault();
-    
-    
+
+    console.log(reviewForm);
 try {
     const response = await axios.post(`${import.meta.env.VITE_API_URL_PRODUCT}/product/rating/createrating`,{
         productId:product._id,
@@ -275,7 +301,7 @@ try {
                   />
                 ))}
                 {
-                  console.log(product)
+                  console.log(product,product.rating)
                 }
               </div>
               <span className="text-gray-600">
@@ -317,16 +343,16 @@ try {
             <div className="mb-8">
               <div className="flex items-center">
                 <span className={`w-3 h-3 rounded-full mr-2 ${
-                  product.availability === "In Stock"
+                  product.availability === "in-stock"
                     ? 'bg-green-500' 
-                    : product.availability === " Out of stock"
+                    : product.availability === " out-of-stock"
                       ? 'bg-yellow-500' 
                       : 'bg-red-500'
                 }`}></span>
                 <span className="text-gray-700 font-medium">
-                  {product.availability === "In Stock"
+                  {product.availability === "in-stock"
                     ? `In Stock (${product.stock} available)` 
-                    : product.availability === "Out of Stock"
+                    : product.availability === "out-of-stock"
                       ? `Low Stock (Only ${product.stock} left)` 
                       : 'Out of Stock'}
                 </span>

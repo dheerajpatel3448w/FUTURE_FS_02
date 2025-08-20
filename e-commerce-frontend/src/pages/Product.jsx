@@ -153,14 +153,16 @@ const Products = () => {
     sort: 'featured'
   });
   
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
+  ;
+  console.log(products);
   
   let filteredProducts = products?.filter(product => {
     return (
       (filters.category === 'all' || product.category === filters.category) &&
       (filters.availability === 'all' || 
-        (filters.availability === 'in-stock' && product.availability === "In Stock") ||
-        (filters.availability === 'out-of-stock' && product.availability === "Out of Stock")
+        (filters.availability === 'in-stock' && product.availability =="in-stock") ||
+        (filters.availability === 'out-of-stock' && product.availability == "out-of-stock")
       )
     );
   });

@@ -69,8 +69,8 @@ let categoriesSample;
 {
 name: "Electronics",
 sub: [
-{ name: "Laptops", to: "laptops" },
-{ name: "Smartphones", to: "Smartphones" },
+{ name: "Laptops", to: "Laptop" },
+{ name: "Smartphones", to: "Smartphone" },
 { name: "Audio", to: "audio" },
 { name: "Wearables", to: "wearables" },
 ],
@@ -325,8 +325,9 @@ whileTap={{ scale: 0.98 }}
                       // emulate search submit
                       setFiltered([]);
                       setActiveIdx(-1);
-                    }}
-                  >
+                      chooseproduct(query)
+                   
+                    }}>
                     Search
                   </button>
                 </div>

@@ -12,18 +12,18 @@ app.use(cors({
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 
-app.use("/user", expressProxy("http://localhost:5001"));
+app.use("/user", expressProxy(process.env.Auth));
 app.use(
   "/product",
-  expressProxy("http://localhost:5002", {
+  expressProxy(process.env.product, {
     proxyReqBodyDecorator: function (bodyContent, srcReq) {
       return bodyContent;
     },
     limit: "50mb"  // 👈 ye important hai
   })
 );
-app.use("/cart", expressProxy("http://localhost:5003"));
-app.use("/order", expressProxy("http://localhost:5004"));
+app.use("/cart", expressProxy(process.env.cart));
+app.use("/order", expressProxy(process.env.order));
 
 // Root test route
 

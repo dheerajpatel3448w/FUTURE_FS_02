@@ -5,6 +5,7 @@ export const createRating = async (req, res) => {
     try {
         const { productId, rating ,comment} = req.body;
         const userId = req.user._id;
+        console.log(rating,comment);
         if (!productId || !userId || !rating || !comment) {
             return res.status(400).json({ message: "All fields are required" });
         }
@@ -15,6 +16,7 @@ export const createRating = async (req, res) => {
             rating
         });
         const newRating = await Rating.findById(newRating1._id).populate("user");
+        console.log(newRating);
         res.status(201).json({
             message: "Rating created successfully",
             rating: newRating
@@ -64,3 +66,20 @@ export const deleteRating = async (req, res) => {
 }
 
 
+export const getRating = (req,res) => {
+    const { id } = req.params;
+    Rating.find({ product: id })
+        .populate("user")
+        .then(ratings => {
+            console.log(ratings);
+
+            res.status(200).json({
+                message: "Ratings fetched successfully",
+                ratings
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching ratings:", error);
+            res.status(500).json({ message: "Failed to fetch ratings" });
+        });
+}
