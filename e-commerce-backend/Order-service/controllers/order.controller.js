@@ -3,10 +3,10 @@ import User from "../models/user.model.js";
 import { Address } from "../models/address.model.js";
 import Product from "../models/product.model.js";
 export const createorder = async (req,res) => {
-    try {
+    
         const {address,carts,paymentMethod} = req.body;
         const user = req.user._id;
-console.log(carts);
+console.log(carts,user);
         const order = await Order.create({
             user,
             address,
@@ -29,9 +29,7 @@ console.log(carts);
 
         res.status(201).json({ message: "Order created successfully", order ,success:true});
 
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
+    
 }
 export const getOrder = async (req, res) => {
     try {

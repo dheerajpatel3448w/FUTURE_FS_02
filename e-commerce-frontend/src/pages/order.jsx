@@ -47,7 +47,7 @@ const OrderPage = () => {
         _id: "prod-1",
         name: "Premium Wireless Headphones",
         price: 249.99,
-        image: "/headphones.jpg"
+        images: ["/headphones.jpg"]
       },
       quantity: 2
     },
@@ -57,7 +57,7 @@ const OrderPage = () => {
         _id: "prod-2",
         name: "Smart Fitness Tracker",
         price: 79.99,
-        image: "/fitness-tracker.jpg"
+        images: ["/fitness-tracker.jpg"]
       },
       quantity: 1
     }
@@ -108,7 +108,24 @@ console.log("Cart data:", cart);
   const [isOrderPlaced, setIsOrderPlaced] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [orderDetails, setOrderDetails] = useState(null);
-
+ const emptyCart = async () => {
+    
+    
+    // Simulate API call to empty cart
+    try {
+        const response = await axios.delete(`${import.meta.env.VITE_API_URL_CART}/cart/deleteallcart`, {
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+          }
+        });
+        if (response.status === 200) {
+          console.log("Cart emptied successfully");
+        }
+    } catch (error) {
+      console.error("Failed to empty cart:", error);
+    }
+  };
   // New address form state
   const [newAddress, setNewAddress] = useState({
     street: "",
@@ -429,7 +446,7 @@ console.log("Selected address:", selectedAddress);
                       className="flex items-center border-b border-gray-100 pb-6 last:border-0 last:pb-0"
                     >
                       <div className="flex-shrink-0 w-20 h-20 bg-gray-200 border-2 border-dashed rounded-xl" >
-                        <img src={item.productId?.image} alt=""  className='w-full h-full object-cover' />
+                        <img src={item.productId.images[0]} alt=""  className='w-full h-full object-cover' />
                         </div>
                       
                       <div className="ml-4 flex-1">
@@ -493,7 +510,9 @@ console.log("Selected address:", selectedAddress);
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  onClick={placeOrder}
+                  onClick={() => { placeOrder() 
+                    emptyCart();
+                  }}
                   disabled={!selectedAddress || isLoading}
                   className={`w-full py-3 rounded-lg font-medium ${
                     !selectedAddress || isLoading
