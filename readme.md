@@ -59,7 +59,7 @@ FUTURE_FS_02/
 ---
 
 ## 🔗 Live Demo & Links
-- 🌍 **Hosted Frontend:** [https://your-frontend-link.vercel.app](https://your-frontend-link.vercel.app)  
+- 🌍 **Hosted Frontend:** [https://dkr-store.vercel.app](https://dkr-store.vercel.app)  
  
 - 💻 **GitHub Repo:** [https://github.com/dheerajpatel3448w/FUTURE_FS_02](https://github.com/dheerajpatel3448w/FUTURE_FS_02)  
 
