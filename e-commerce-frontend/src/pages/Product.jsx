@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import Pagination from '../components/pagination';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 const ProductCard = ({ product }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isTouched, setIsTouched] = useState(false);
+  const navigate = useNavigate();
   
   const addcart = async(product) => {
     try {
@@ -21,6 +22,8 @@ const ProductCard = ({ product }) => {
       console.log('Product added to cart:', response.data);
     } catch (error) {
       console.error('Error adding product to cart:', error);
+      navigate('/login');
+      
     }
   }
 
@@ -185,6 +188,7 @@ const Products = () => {
       setproducts(response.data.products);
     } catch (error) {
       console.error("Error fetching products:", error);
+      alert("please login !");
     }
   }
   

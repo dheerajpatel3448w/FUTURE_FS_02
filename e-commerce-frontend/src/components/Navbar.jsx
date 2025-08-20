@@ -29,9 +29,7 @@ const searchRef = useRef(null);
 const suggestionsRef = useRef(null);
 const navigate = useNavigate();
 
-const [user2, setuser2] = useState({
-  name:" "
-});
+const [user2, setuser2] = useState(null);
 
 
 useEffect(()=>{
@@ -47,9 +45,28 @@ useEffect(()=>{
   })
   .catch(error => {
     console.error("Error fetching user data:", error);
+    alert("please login !");
+    navigate('/login');
   });
 }, []);
 
+const handlelogout = async (params) => {
+  try {
+    const response = await axios.get(`${import.meta.env.VITE_API_URL_AUTH}/user/logout`, {
+      withCredentials: true,
+      headers: {
+        Authorization: `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+      }
+    });
+    console.log("Logout successful:", response.data);
+    localStorage.removeItem("token");
+    setuser2(null);
+    navigate('/');
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
+  
+}
 
 useEffect(() => {
 if (!query) {
@@ -194,6 +211,7 @@ const chooseproduct = async(to) => {
     
   } catch (error) {
     console.log(error);
+    alert("please login !");
      navigate('/products',{
 
       state:{
@@ -544,13 +562,13 @@ whileTap={{ scale: 0.98 }}
                     aria-label="User menu"
                   >
                     <div className="w-8 h-8 rounded-full bg-[rgba(99,102,241,0.12)] flex items-center justify-center text-sm font-semibold text-slate-800">
-                      {user2.name
+                      {user2?.name
                         .split(" ")
                         .map((n) => n[0])
                         .slice(0, 2)
                         .join("")}
                     </div>
-                    <span className="hidden sm:inline text-sm text-slate-700">{user2.name.split(" ")[0]}</span>
+                    <span className="hidden sm:inline text-sm text-slate-700">{user2?.name?.split(" ")[0]}</span>
                   </Menu.Button>
                 </div>
                 <Transition
@@ -589,12 +607,27 @@ whileTap={{ scale: 0.98 }}
                         </Link>
                       )}
                     </Menu.Item>
+                     { !user2 && <Menu.Item>
+                      {({ active }) => (
+                        <button
+                          className={`w-full text-left px-3 py-2 rounded-xl text-sm ${active ? "bg-[rgba(236,72,153,0.06)]" : ""}`}
+                          onClick={() => {
+                            navigate('/login');
+                          }}
+                        >
+                          <div className="flex items-center gap-2">
+                            <FiLogOut className="w-4 h-4" /> Login
+                          </div>
+                        </button>
+                      )}
+                    </Menu.Item>
+}                   { user2 &&
                     <Menu.Item>
                       {({ active }) => (
                         <button
                           className={`w-full text-left px-3 py-2 rounded-xl text-sm ${active ? "bg-[rgba(236,72,153,0.06)]" : ""}`}
                           onClick={() => {
-                            // logout action
+                           handlelogout();
                           }}
                         >
                           <div className="flex items-center gap-2">
@@ -603,6 +636,7 @@ whileTap={{ scale: 0.98 }}
                         </button>
                       )}
                     </Menu.Item>
+               }
                   </Menu.Items>
                 </Transition>
               </Menu>
@@ -768,7 +802,7 @@ whileTap={{ scale: 0.98 }}
               <div className="mt-3 border-t pt-3">
                 <Link to="/profile" onClick={() => setMobileOpen(false)} className="flex items-center gap-3 px-2 py-2 rounded-lg">
                   <div className="w-9 h-9 rounded-full flex items-center justify-center bg-[rgba(99,102,241,0.12)]">
-                    {userSample.name
+                    {user2?.name
                       .split(" ")
                       .map((n) => n[0])
                       .slice(0, 2)
@@ -779,15 +813,28 @@ whileTap={{ scale: 0.98 }}
                     <div className="text-xs text-slate-600">View Profile</div>
                   </div>
                 </Link>
-                <button
+                {
+                 !user2 && <button
                   onClick={() => {
                     // logout
+                    setMobileOpen(false);
+                    navigate('/login');
+                  }}
+                  className="w-full mt-3 px-3 py-2 rounded-xl flex items-center justify-center gap-2"
+                >
+                  <FiLogOut /> Login
+                </button>
+                }
+               {user2 && <button
+                  onClick={() => {
+                  handlelogout();
                     setMobileOpen(false);
                   }}
                   className="w-full mt-3 px-3 py-2 rounded-xl flex items-center justify-center gap-2"
                 >
                   <FiLogOut /> Logout
                 </button>
+                  }
               </div>
             </div>
           </div>

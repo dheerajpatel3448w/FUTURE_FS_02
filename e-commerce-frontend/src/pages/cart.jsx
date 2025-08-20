@@ -13,7 +13,7 @@ const CartPage = () => {
   const [isUpdating, setIsUpdating] = useState(false);
   const [updateSuccess, setUpdateSuccess] = useState(false);
   const [removingItem, setRemovingItem] = useState(null);
-
+const navigate = useNavigate();
   // Simulate fetching cart data from backend
   useEffect(() => {
     const fetchCartData = () => {
@@ -31,6 +31,8 @@ const CartPage = () => {
     }).catch((error)=>{
         console.error("Failed to fetch cart data",error);
         setIsLoading(false);
+        navigate('/login');
+        alert('login please');
     })
     };
 
@@ -132,7 +134,7 @@ const CartPage = () => {
       setIsUpdating(false);
     }
   };
-  const navigate = useNavigate();
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 py-12 mt-[50px]">
       <div className="container mx-auto px-4 max-w-7xl">
