@@ -51,6 +51,12 @@ const productSchema = new mongoose.Schema({
 
         }
     ],
+    search:[
+        {
+            type: String,
+            required: true
+        }
+    ],
     
     discountPrice:{
         type:Number
