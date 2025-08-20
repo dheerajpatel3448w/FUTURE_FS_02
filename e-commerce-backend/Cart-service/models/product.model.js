@@ -17,18 +17,23 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+     search:[
+        {
+            type: String,
+            required: true
+        }
+     ],
     images: [
-       { type: String,
-        
+       {
+         type: String,
+       
        }
     ],
     availability: {
         type: String,
-        enum:["In Stock", "Out of Stock"],
-        default: "In Stock"
-
-    }
-    ,
+        enum: ["in-stock", "out-of-stock"],
+        default: "in-stock"
+    },
     rating: {
         type: Number,
         
@@ -51,7 +56,8 @@ const productSchema = new mongoose.Schema({
             type: String,
             required: true
         }
-     ],
+    ],
+    
     discountPrice:{
         type:Number
     }
@@ -60,3 +66,4 @@ const productSchema = new mongoose.Schema({
 const Product = mongoose.model("Product", productSchema);
 
 export default Product
+
