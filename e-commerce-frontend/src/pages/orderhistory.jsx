@@ -164,14 +164,14 @@ const OrderHistoryPage = () => {
                   {/* Order Header */}
                   <div 
                     className="p-6 cursor-pointer flex justify-between items-center"
-                    onClick={() => toggleOrderDetails(order._id)}
+                    onClick={() => toggleOrderDetails(order?._id)}
                   >
                     <div className="flex items-center">
                       <div className={`${statusDetails.color} rounded-full p-2 mr-4`}>
                         {statusDetails.icon}
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900">Order #{order._id.slice(-6).toUpperCase()}</h3>
+                        <h3 className="font-semibold text-gray-900">Order #{order?._id.slice(-6).toUpperCase()}</h3>
                         <p className="text-sm text-gray-500 flex items-center">
                           <CalendarIcon className="h-4 w-4 mr-1" />
                           {orderDate}
@@ -182,7 +182,7 @@ const OrderHistoryPage = () => {
                     <div className="flex items-center">
                       <div className="mr-4 text-right">
                         <p className="text-sm text-gray-500">Total</p>
-                        <p className="font-semibold text-gray-900">${order.totalamount.toFixed(2)}</p>
+                        <p className="font-semibold text-gray-900">${order?.totalamount.toFixed(2)}</p>
                       </div>
                       <motion.div
                         animate={{ rotate: expandedOrder === order._id ? 90 : 0 }}
@@ -212,9 +212,9 @@ const OrderHistoryPage = () => {
                                 Delivery Address
                               </h4>
                               <div className="bg-gray-50 rounded-lg p-4">
-                                <p className="font-medium text-gray-900">{order.address.street}</p>
+                                <p className="font-medium text-gray-900">{order?.address.street}</p>
                                 <p className="text-gray-600">
-                                  {order.address.city}, {order.address.state} {order.address.zip}
+                                  {order?.address.city}, {order?.address.state} {order?.address.zip}
                                 </p>
                               </div>
                             </div>
@@ -230,13 +230,13 @@ const OrderHistoryPage = () => {
                                 <div className="flex justify-between mb-2">
                                   <span className="text-gray-600">Payment Status</span>
                                   <span className={`font-medium ${
-                                    order.paymentStatus === 'completed' 
+                                    order?.paymentStatus === 'completed' 
                                       ? 'text-green-600' 
-                                      : order.paymentStatus === 'failed' 
+                                      : order?.paymentStatus === 'failed' 
                                         ? 'text-red-600' 
                                         : 'text-yellow-600'
                                   }`}>
-                                    {order.paymentStatus.charAt(0).toUpperCase() + order.paymentStatus.slice(1)}
+                                    {order?.paymentStatus.charAt(0).toUpperCase() + order?.paymentStatus.slice(1)}
                                   </span>
                                 </div>
                                 <div className="flex justify-between">
@@ -252,7 +252,7 @@ const OrderHistoryPage = () => {
                           {/* Products */}
                           <h4 className="text-lg font-medium text-gray-900 mb-4">Products</h4>
                           <div className="space-y-4 mb-8">
-                            {order.products.map((item, idx) => (
+                            {order?.products.map((item, idx) => (
                               <motion.div
                                 key={idx}
                                 initial={{ opacity: 0, x: -20 }}
@@ -262,15 +262,15 @@ const OrderHistoryPage = () => {
                               >
                                 <div className="flex-shrink-0 w-16 h-16 bg-gray-200 border-2 border-dashed rounded-xl" />
                                 <div className="ml-4 flex-1">
-                                  <h5 className="font-medium text-gray-900">{item.product.title}</h5>
+                                  <h5 className="font-medium text-gray-900">{item?.product?.title}</h5>
                                   <div className="flex justify-between mt-2">
                                     <div>
-                                      <span className="text-gray-600 text-sm">Qty: {item.quantity}</span>
+                                      <span className="text-gray-600 text-sm">Qty: {item?.quantity}</span>
                                       <span className="mx-2 text-gray-300">•</span>
-                                      <span className="text-gray-600 text-sm">${item.price.toFixed(2)}</span>
+                                      <span className="text-gray-600 text-sm">${item?.price?.toFixed(2)}</span>
                                     </div>
                                     <div className="font-medium">
-                                      ${(item.product.price * item.quantity).toFixed(2)}
+                                      ${(item?.product?.price * item?.quantity).toFixed(2)}
                                     </div>
                                   </div>
                                 </div>
@@ -282,7 +282,7 @@ const OrderHistoryPage = () => {
                           <div className="bg-gray-50 rounded-lg p-4 max-w-md ml-auto">
                             <div className="flex justify-between mb-2">
                               <span className="text-gray-600">Subtotal</span>
-                              <span className="font-medium">${order.totalamount.toFixed(2)}</span>
+                              <span className="font-medium">${order?.totalamount.toFixed(2)}</span>
                             </div>
                             <div className="flex justify-between mb-2">
                               <span className="text-gray-600">Shipping</span>
@@ -290,11 +290,11 @@ const OrderHistoryPage = () => {
                             </div>
                             <div className="flex justify-between mb-2">
                               <span className="text-gray-600">Tax</span>
-                              <span className="font-medium">${(order.totalamount * 0.08).toFixed(2)}</span>
+                              <span className="font-medium">${(order?.totalamount * 0.08).toFixed(2)}</span>
                             </div>
                             <div className="border-t border-gray-200 pt-2 mt-2 flex justify-between">
                               <span className="font-semibold text-gray-900">Total</span>
-                              <span className="font-bold text-indigo-600">${(order.totalamount * 1.08).toFixed(2)}</span>
+                              <span className="font-bold text-indigo-600">${(order?.totalamount * 1.08).toFixed(2)}</span>
                             </div>
                           </div>
                         </div>
