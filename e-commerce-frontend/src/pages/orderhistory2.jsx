@@ -262,15 +262,15 @@ const OrderHistoryPage2 = () => {
                               >
                                 <div className="flex-shrink-0 w-16 h-16 bg-gray-200 border-2 border-dashed rounded-xl" />
                                 <div className="ml-4 flex-1">
-                                  <h5 className="font-medium text-gray-900">{item.product.title}</h5>
+                                  <h5 className="font-medium text-gray-900">{item?.product?.title}</h5>
                                   <div className="flex justify-between mt-2">
                                     <div>
-                                      <span className="text-gray-600 text-sm">Qty: {item.quantity}</span>
+                                      <span className="text-gray-600 text-sm">Qty: {item?.quantity}</span>
                                       <span className="mx-2 text-gray-300">•</span>
-                                      <span className="text-gray-600 text-sm">${item.price.toFixed(2)}</span>
+                                      <span className="text-gray-600 text-sm">${item?.price?.toFixed(2)}</span>
                                     </div>
                                     <div className="font-medium">
-                                      ${(item.product.price * item.quantity).toFixed(2)}
+                                      ${(item?.product?.price * item?.quantity).toFixed(2)}
                                     </div>
                                   </div>
                                 </div>
