@@ -27,7 +27,7 @@ const OrderHistoryPage = () => {
       axios.get(`${import.meta.env.VITE_API_URL_ORDER}/order/getorder`, {
         withCredentials: true,
         headers:{
-          "Authorization": `Bearer ${localStorage.getItem("token")}`
+          "Authorization": `Bearer ${JSON.parse(localStorage.getItem("token"))}`
         }
       }).then((response)=>{
         console.log(response.data.order);
