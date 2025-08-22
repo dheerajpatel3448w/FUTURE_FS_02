@@ -8,7 +8,7 @@ import { Mail, Lock, Eye, EyeOff, Loader2, LogIn } from "lucide-react";
 import axios from "axios";
 import { useContext } from "react";
 import { UserContext } from "../context/user.context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // ----------------------
 // Schema & Types
 // ----------------------
@@ -184,9 +184,9 @@ export default function Login() {
               <a href="#" className="underline underline-offset-4">
                 Forgot password?
               </a>
-              <a href="#" className="underline underline-offset-4">
+              <Link to="/register" className="underline underline-offset-4">
                 Create account
-              </a>
+              </Link>
             </div>
           </form>
         </div>
