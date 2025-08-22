@@ -309,7 +309,7 @@ whileTap={{ scale: 0.98 }}
 </svg>
 </motion.div>
 <div className="flex flex-col leading-tight">
-<span className="text-lg font-semibold tracking-tight text-slate-800">Shoply</span>
+<span className="text-lg font-semibold tracking-tight text-slate-800">DKR</span>
 <span className="text-xs -mt-0.5 text-slate-600">curated goods</span>
 </div>
 </Link>
